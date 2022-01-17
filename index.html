@@ -1,0 +1,30 @@
+---
+layout: page
+---
+
+<div class="grid">
+  {% for post in paginator.posts %}
+    <div class="photo">
+      <a href="{{ post.url | absoluteurl }}">
+        <div class="image">
+          {% if post.preview != null %}
+            <img src="{{ post.preview | absoluteurl }}" loading="lazy">
+          {% else %}
+            <img src="{{ post.image | absoluteurl }}" loading="lazy">
+          {% endif %}
+        </div>
+        <div class="photo-info">
+          <p class="date">{{ post.date | date: "%B %-d, %Y"}}</p>
+          {% if post.location != null %}
+            <p class="location">&#x1F4CD; {{ post.location }}</p>
+          {% endif %}
+          {% if post.metadata != null %}
+            <p class="metadata">&#x1F4F7; {{ post.metadata }}</p>
+          {% endif %}
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+{% include pagination.html %}
