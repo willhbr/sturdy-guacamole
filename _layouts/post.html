@@ -2,21 +2,25 @@
 layout: page
 ---
 
-<div class="full-photo">
-  <img src="{{ page.image | absoluteurl }}">
+<div class="photo-container">
+  <div class="image">
+    <img src="{{ page.image | absoluteurl }}">
+  </div>
 </div>
 
-<div class="photo-info">
-  <p class="date">{{ page.date | date: "%B %-d, %Y"}}</p>
-  {% if page.location != null %}
-    <p class="location">&#x1F4CD; {{ page.location }}</p>
-  {% endif %}
-  {% if page.metadata != null %}
-    <p class="metadata">&#x1F4F7; {{ page.metadata }}</p>
-  {% endif %}
-</div>
+<div class="description">
+  <div class="photo-info">
+    <p class="date">{{ page.date | date: "%B %-d, %Y"}}</p>
+    {% if page.location != null %}
+      <p class="location">&#x1F4CD; {{ page.location }}</p>
+    {% endif %}
+    {% if page.metadata != null %}
+      <p class="metadata">&#x1F4F7; {{ page.metadata }}</p>
+    {% endif %}
+  </div>
 
-{{ page.content }}
+  {{ page.content }}
+</div>
 
 <br>
 <a class="back-control" href="{{ site.baseurl | absolute_url }}">&larr; Back</span>
