@@ -2,7 +2,7 @@ title: Will Richardson
 email: your-email@example.com
 description: Will's photos
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://p.willhbr.net"
+url: "https://pics.willhbr.net"
 
 # Build settings
 plugins:
