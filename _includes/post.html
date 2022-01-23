@@ -1,27 +1,19 @@
-<h1 class="post-title">
-  {% if page.link == null %}
-    <span class="arrow">&#10093; </span>
-    <a class="post-link" href="{{ page.url | absolute_url }}">
-      {{ page.title }}
-    </a>
-  {% else %}
-    <a class="post-link" href="{{ page.link | absolute_url}}">
-      {{ page.title }}
-      <span class="arrow">&#8594; </span>
-    </a>
-  {% endif %}
-</h1>
-
-<div class="metadata">
-  <span class="post-date">{{ page.date | date: "%B %-d, %Y" }}</span> &bull; 
-  <a href="{{ page.url | absolute_url }}" class="permalink" title="Permalink">&infin;</a>
+<div class="photo-container">
+  <div class="image">
+    <img src="{{ post.image | absoluteurl }}">
+  </div>
 </div>
 
-<div class="post-body">
-  {% if page.header %}
-    <img src="{{ page.header  }}">
-  {% endif %}
-  {{ content }}
-</div>
+<div class="description">
+  <div class="photo-info">
+    <p class="date">{{ post.date | date: "%B %-d, %Y" }}</p>
+    {% if post.location != null %}
+      <p class="location">&#x1F4CD; {{ post.location }}</p>
+    {% endif %}
+    {% if post.metadata != null %}
+      <p class="metadata">&#x1F4F7; {{ post.metadata }}</p>
+    {% endif %}
+  </div>
 
-<br>
+  {{ post.content }}
+</div>

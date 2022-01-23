@@ -11,24 +11,17 @@ layout: null
     "favicon": "{{ "/favicon.ico" | absolute_url }}",
     "expired": false,
     "items": [
-    {% for post in site.posts limit:36 %}
+    {% for post in site.posts limit:21 %}
         {
             "id": "{{ post.url | absolute_url | sha1 }}",
-            "title": {{ post.title | jsonify }},
+            "title": "Pic on {{ post.date | date: "%B %-d, %Y" }}",
             "summary": {{ post.seo_description | jsonify }},
-            "content_text": {{ post.content | strip_html | strip_newlines | jsonify }},
-            "content_html": {{ post.content | strip_newlines | jsonify }},
+            {% capture content %}
+              {% include post.html %}
+            {% endcapture %}
+            "content_html": {{ content | strip_newlines | jsonify }},
             "url": "{{ post.url | absolute_url }}",
-            {% if post.image.size > 1 %}"image": "{{ post.image }}",{% endif %}
-            {% if post.link.size > 1 %}"external_url": "{{ post.link }}",{% endif %}
-            {% if post.banner.size > 1 %}"banner_image": "{{ post.banner }}",{% endif %}
-            {% if post.tags.size > 1 %}"tags": {{ post.tags | jsonify }},{% endif %}
-            {% if post.enclosure.size > 1 %}"attachments": [
-            {
-              "url": "{{ post.enclosure }}",
-              "mime_type": "{{ post.enclosure_type }}",
-              "size_in_bytes": "{{ post.enclosure_length }}"
-            },{% endif %}
+            {% if post.image.size > 1 %}"image": "{{ post.image | absolute_url }}",{% endif %}
             "date_published": "{{ post.date | date_to_xmlschema }}",
             "date_modified": "{{ post.date | date_to_xmlschema }}",
             "author": {
