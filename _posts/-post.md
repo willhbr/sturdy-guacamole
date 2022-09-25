@@ -1,9 +1,9 @@
 ---
-date: 2022-09-13
-image: /photos/2022-09-13.jpeg
-preview: /photos/thumb-2022-09-13.jpeg
+date: 2022-09-22
+image: /photos/2022-09-22.jpeg
+preview: /photos/thumb-2022-09-22.jpeg
 layout: post
-location: "Sumner Beach"
+location: "Geraldton, WA"
 ---
 
 
