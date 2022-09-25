@@ -1,9 +1,9 @@
 ---
-date: 2022-09-22
-image: /photos/2022-09-22.jpeg
-preview: /photos/thumb-2022-09-22.jpeg
+date: 2022-09-23
+image: /photos/2022-09-23.jpeg
+preview: /photos/thumb-2022-09-23.jpeg
 layout: post
-location: "Geraldton, WA"
+location: "Kalbarri National Park"
 ---
 
 
