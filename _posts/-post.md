@@ -1,9 +1,9 @@
 ---
-date: 2022-08-21
-image: /photos/2022-08-21.jpeg
-preview: /photos/thumb-2022-08-21.jpeg
+date: 2022-09-11
+image: /photos/2022-09-11.jpeg
+preview: /photos/thumb-2022-09-11.jpeg
 layout: post
-location: "Otira gorge"
+location: "Bondi Beach"
 ---
 
-Symmetry, or something
+
