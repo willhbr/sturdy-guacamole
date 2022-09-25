@@ -1,9 +1,9 @@
 ---
-date: 2022-07-19
-image: /photos/2022-07-19.jpeg
-preview: /photos/thumb-2022-07-19.jpeg
+date: 2022-08-21
+image: /photos/2022-08-21.jpeg
+preview: /photos/thumb-2022-08-21.jpeg
 layout: post
-location: "Rangitata River"
+location: "Otira gorge"
 ---
 
-
+Symmetry, or something
