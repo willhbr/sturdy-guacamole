@@ -7,11 +7,7 @@ layout: page
     <div class="photo">
       <a href="{{ post.url | absoluteurl }}">
         <div class="image">
-          {% if post.preview != null %}
-            <img src="{{ post.preview | absoluteurl }}" loading="lazy">
-          {% else %}
-            <img src="{{ post.image | absoluteurl }}" loading="lazy">
-          {% endif %}
+          <img src="{{ "/thumbnail/" | append: post.image | absoluteurl }}" loading="lazy">
         </div>
         <div class="photo-info">
           <p class="date">{{ post.date | date: "%B %-d, %Y"}}<br></p>

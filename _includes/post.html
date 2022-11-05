@@ -1,6 +1,6 @@
 <div class="photo-container">
   <div class="image">
-    <img src="{{ post.image | absoluteurl }}">
+    <img src="{{ "/photos/" | append: post.image | absoluteurl }}">
   </div>
 </div>
 
