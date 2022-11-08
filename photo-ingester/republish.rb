@@ -27,7 +27,12 @@ def sys_or_fail(*args)
 end
 
 def clone_or_pull(path, remote)
-  sys_or_fail "git","clone", remote, path
+  if Dir.exists? path
+    Dir.chdir(path)
+    sys_or_fail "git", "-C", path, "pull"
+  else
+    sys_or_fail "git","clone", remote, path
+  end
 end
 
 def get_files(path, rev)
@@ -36,8 +41,8 @@ end
 
 def get_message(path, rev)
   lines = `git -C #{path} rev-list --format=%B --max-count=1 #{rev}`.split("\n")
-  lines.shift
-  lines.join("\n")
+  hash = lines.shift.split(' ').last
+  [lines.join("\n"), hash]
 end
 
 def get_size(image)
@@ -60,6 +65,16 @@ def convert_image(image, size, quality, output)
   width, height = calculate_size w, h, size
   sys_or_fail('convert', image, '-resize', "#{width}x#{height}", '-quality',
               quality.to_s, '-strip', output)
+end
+
+def convert_thumbnail(image, size, quality, output)
+  w, h = get_size(image)
+  cs = [w, h].min
+  x = (w - cs) / 2
+  y = (h - cs) / 2
+
+  sys_or_fail('convert', image, '-crop', "#{cs}x#{cs}+#{x}+#{y}",
+              '-resize', "#{size}x#{size}", '-quality', quality.to_s, '-strip', output)
 end
 
 def do_image(repo, image_file, message, config)
@@ -92,7 +107,7 @@ def do_image(repo, image_file, message, config)
 
   md = TEMPLATE.result(binding)
   File.write("#{repo}/_posts/#{date_str}-post.md", md)
-  convert_image(image_file, config['thumbnail_size'].to_i,
+  convert_thumbnail(image_file, config['thumbnail_size'].to_i,
                 config['thumbnail_compression'].to_i, "#{repo}/thumbnail/#{image}")
   convert_image(image_file, config['image_size'].to_i,
                 config['image_compression'].to_i, "#{repo}/photos/#{image}")
@@ -103,11 +118,29 @@ repo_path = config['repo_path']
 repo_remote = config['repo_remote']
 working_repo = config['watch_repo']
 
-# clone_or_pull repo_path, repo_remote
 
-image = get_files(working_repo, 'HEAD').find { |file| file.match?(/\.jpe?g/) }
-image_path = working_repo + '/' + image
-message = get_message working_repo, 'HEAD'
+clone_or_pull repo_path, repo_remote
 
-puts do_image(repo_path, image_path, message, config)
+commits = ["HEAD"]
 
+last_hash = "#{repo_path}/.last-hash"
+if File.exists? last_hash
+  lh = File.read(last_hash).strip
+  puts "Getting from #{lh}"
+  commits = `git -C #{working_repo} rev-list --ancestry-path #{lh}..HEAD`.split("\n")
+end
+
+last_processed = nil
+
+commits.each do |hash|
+  puts "Handling #{hash}"
+  image = get_files(working_repo, hash).find { |file| file.match?(/\.jpe?g/) }
+  image_path = working_repo + '/' + image
+  message, last_processed = get_message working_repo, hash
+
+  do_image(repo_path, image_path, message, config)
+
+  sys_or_fail 'git', 'commit', '-am', message
+end
+
+File.write(last_hash, last_processed) if last_processed
