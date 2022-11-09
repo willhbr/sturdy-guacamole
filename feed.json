@@ -21,7 +21,7 @@ layout: null
             {% endcapture %}
             "content_html": {{ content | strip_newlines | jsonify }},
             "url": "{{ post.url | absolute_url }}",
-            {% if post.image.size > 1 %}"image": "{{ post.image | absolute_url }}",{% endif %}
+            {% if post.image.size > 1 %}"image": "{{ "/photos/" | append: post.image | absolute_url }}",{% endif %}
             "date_published": "{{ post.date | date_to_xmlschema }}",
             "date_modified": "{{ post.date | date_to_xmlschema }}",
             "author": {
