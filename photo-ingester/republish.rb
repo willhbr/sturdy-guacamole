@@ -3,6 +3,11 @@ require 'date'
 require "erb"
 require "fileutils"
 
+THUMBNAIL_COMPPRESSION = 70
+THUMBNAIL_SIZE = 640
+IMAGE_COMPRESSION = 85
+IMAGE_SIZE = 1440
+
 ACTUAL_TEMPLATE = <<-EOF
 ---
 layout: post
@@ -28,7 +33,6 @@ end
 
 def clone_or_pull(path, remote)
   if Dir.exists? path
-    Dir.chdir(path)
     sys_or_fail "git", "-C", path, "pull"
   else
     sys_or_fail "git","clone", remote, path
@@ -77,7 +81,7 @@ def convert_thumbnail(image, size, quality, output)
               '-resize', "#{size}x#{size}", '-quality', quality.to_s, '-strip', output)
 end
 
-def do_image(repo, image_file, message, config)
+def do_image(image_file, message)
   location = nil
   content = ''
   date = Date.parse(image_file.split('/')[-1]) rescue Date.today
@@ -106,29 +110,41 @@ def do_image(repo, image_file, message, config)
   image = "#{date_str}.jpeg"
 
   md = TEMPLATE.result(binding)
-  File.write("#{repo}/_posts/#{date_str}-post.md", md)
-  convert_thumbnail(image_file, config['thumbnail_size'].to_i,
-                config['thumbnail_compression'].to_i, "#{repo}/thumbnail/#{image}")
-  convert_image(image_file, config['image_size'].to_i,
-                config['image_compression'].to_i, "#{repo}/photos/#{image}")
+  File.write("_posts/#{date_str}-post.md", md)
+  puts "Writing thumbnail for #{image}"
+  convert_thumbnail(image_file, THUMBNAIL_SIZE,
+                THUMBNAIL_COMPPRESSION, "thumbnail/#{image}")
+  puts "Writing #{image}"
+  convert_image(image_file, IMAGE_SIZE,
+                IMAGE_COMPRESSION, "photos/#{image}")
+  puts "Finished #{message.split("\n")[0]}"
 end
 
-config = JSON.parse(File.read(ARGV[0]))
-repo_path = config['repo_path']
-repo_remote = config['repo_remote']
-working_repo = config['watch_repo']
+bare_repo = ARGV[0]
 
+# clone bare repo to tmp
 
-clone_or_pull repo_path, repo_remote
+working_repo =  "/tmp/photos-raw"
+clone_or_pull working_repo, bare_repo
 
-commits = ["HEAD"]
+# find last commit
 
-last_hash = "#{repo_path}/.last-hash"
-if File.exists? last_hash
-  lh = File.read(last_hash).strip
-  puts "Getting from #{lh}"
-  commits = `git -C #{working_repo} rev-list --ancestry-path #{lh}..HEAD`.split("\n")
+last_hash = File.exists?(".last-hash") ? File.read(".last-hash").strip : nil
+
+# list commits from last to HEAD
+
+if ARGV[1]
+  puts "using specific commit: #{ARGV[1]}"
+  commits = [ARGV[1]]
+elsif last_hash.nil?
+  puts "no last hash"
+  commits = ["HEAD"]
+else
+  puts "Getting from #{last_hash}"
+  commits = `git -C #{working_repo} rev-list --ancestry-path #{last_hash}..HEAD`.split("\n")
 end
+
+# process each commit
 
 last_processed = nil
 
@@ -138,9 +154,12 @@ commits.each do |hash|
   image_path = working_repo + '/' + image
   message, last_processed = get_message working_repo, hash
 
-  do_image(repo_path, image_path, message, config)
+  do_image(image_path, message)
 
-  sys_or_fail 'git', 'commit', '-am', message
+  # sys_or_fail 'git', 'commit', '-am', message
 end
 
-File.write(last_hash, last_processed) if last_processed
+# push changes
+
+File.write(".last-hash", last_processed) if last_processed
+

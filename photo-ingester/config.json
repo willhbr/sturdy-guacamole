@@ -1,9 +1,0 @@
-{
-  "repo_path": "/tmp/sturdy-guacamole",
-  "repo_remote": "https://github.com/willhbr/sturdy-guacamole.git",
-  "watch_repo": "/tmp/test-repo",
-  "thumbnail_size": 640,
-  "thumbnail_compression": 70,
-  "image_size": 1440,
-  "image_compression": 85
-}
