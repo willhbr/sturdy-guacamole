@@ -16,4 +16,12 @@
   </div>
 
   {{ post.content }}
+
+  {% if post.next.url %}
+    <a href="{{ post.next.url | absoluteurl }}">Next</a>
+  {% endif %}
+  <a class="back-control" href="{{ site.baseurl | absolute_url }}">Home</span>
+  {% if post.previous.url %}
+    <a href="{{ post.previous.url | absoluteurl }}">Previous</a>
+  {% endif %}
 </div>
