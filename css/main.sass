@@ -144,6 +144,11 @@ a.footnote:after
   font-size: $metadata-size
   float: center
   text-align: center
+  .button
+    line-height: 2.5
+  .button.current
+    background: var(--highlight-colour)
+    color: var(--text-colour)
 
 .post-footer
   width: 100%
@@ -159,10 +164,6 @@ a.footnote:after
   background: transparent
   color: var(--highlight-colour)
   font-weight: lighter
-
-.pagination .button.current
-  background: var(--highlight-colour)
-  color: var(--text-colour)
 
 .controls
   text-align: center
