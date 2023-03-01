@@ -1,141 +1,178 @@
 ---
 ---
 
-$highlight-color: #1f809e
-$highlight-color-dark: #35c4f0
-$background-color: #fbfbfb
-$background-color-dark: #333
-$text-color: #333
-$text-color-dark: #ddd
-$blockquote-color: lighten($text-color, 20%)
-$blockquote-color-dark: darken($text-color-dark, 20%)
-$heading-color: darken($text-color, 10%)
-$heading-color-dark: lighten($text-color-dark, 10%)
+$highlight-colour-light: #6609a0
+$highlight-colour-dark: #D4B3FF
+$background-colour-light: #EEEEEE
+$background-colour-dark: #333
+$text-colour-light: #333
+$text-colour-dark: #DDD
+$title-colour-light: black
+$title-colour-dark: white
 
+$blockquote-colour-light: lighten($text-colour-light, 5%)
+$blockquote-colour-dark: darken($text-colour-dark, 5%)
+$blockquote-background-light: darken($background-colour-light, 5%)
+$blockquote-background-dark: lighten($background-colour-dark, 5%)
+
+$link-hover-colour-light: darken($highlight-colour-light, 10%)
+$link-hover-colour-dark: lighten($highlight-colour-dark, 10%)
+
+$metadata-colour-light: lighten($text-colour-light, 20%)
+$metadata-colour-dark: darken($text-colour-dark, 20%)
+
+$footer-colour-light: lighten($text-colour-light, 10%)
+$footer-colour-dark: darken($text-colour-dark, 10%)
+
+@import "darkmode"
+
+$paragraph-size: 16px
 $header-size: 2.2em
-$metadata-size: 1.25rem
+$metadata-size: 1.1rem
 $title-size: 2em
-$footer-size: 0.8rem
+$footer-size: 0.9rem
 
 $blockquote-border-width: 3px
 $body-side-margin: 8px
 
+$page-width: 1200px
+
 body
-  background-color: $background-color
-  color: $text-color
-  font-family: "Roboto", "Helvetica", sans-serif
-  font-size: 16px
+  color: var(--text-colour)
+  background-color: var(--background-colour)
+  font-family: "Helvetica", "Roboto", sans-serif
+  font-size: $paragraph-size
   font-weight: 300
   margin-left: $body-side-margin
   margin-right: $body-side-margin
-  min-height: 100vh
+  transition: background-color 0.6s
 
-@media (prefers-color-scheme: dark)
-  body
-    background-color: $background-color-dark
-    color: $text-color-dark
+#theme-toggle
+  clear: both
+  position: fixed
+  right: 0
+  top: 0
+  border: none
+  background: none
+  color: var(--text-color)
+  padding: 5px
 
 strong
   font-weight: bold
 
 a
-  color: $highlight-color
+  color: var(--highlight-colour)
   text-decoration: none
   cursor: pointer
 
 a:hover
-  color: darken($highlight-color, 20%)
+  color: var(--link-hover-colour)
   text-decoration: none
-
-@media (prefers-color-scheme: dark)
-  a
-    color: $highlight-color-dark
-  a:hover
-    color: lighten($highlight-color-dark, 20%)
 
 hr
   border: none
   height: 1px
-  color: $text-color
-  background-color: $text-color
+  color: var(--text-colour)
+  background-color: var(--text-colour)
   width: 70%
 
 h1.post-title
   font-size: $title-size
 
 h1, h2, h3, h4, h5, h6
-  color: $heading-color
+  color: var(--highlight-colour)
   font-weight: 300
-  margin-bottom: 5px
-@media (prefers-color-scheme: dark)
-  h1, h2, h3, h4, h5, h6
-    color: $heading-color-dark
+  margin-bottom: 0
+
+img
+  border-radius: 4px
+
+.post-body
+  margin-top: 1em
+  p
+    line-height: 1.3
+    margin-top: 0
+
+.metadata, .metadata a
+  color: var(--metadata-colour)
+  font-size: $metadata-size
 
 .title
   font-weight: 300
   font-size: $header-size
-  color: black
-
-@media (prefers-color-scheme: dark)
-  .title
-    color: white
+  color: var(--title-colour)
 
 header
   text-align: center
   margin-top: 25px
+  margin-bottom: 50px
 
 blockquote
   margin: 0px
-  color: $blockquote-color
-  border-left: $blockquote-border-width solid $highlight-color
+  color: var(--blockquote-colour)
+  background: var(--blockquote-background)
+  border-left: $blockquote-border-width solid var(--highlight-colour)
   margin-left: -$body-side-margin
   padding-left: ($body-side-margin - $blockquote-border-width)
+  padding-top: 10px
+  padding-bottom: 1px
+  margin-bottom: 1em
 
-@media (prefers-color-scheme: dark)
-  blockquote
-    color: $blockquote-color-dark
-    border-color: $highlight-color-dark
+.container
+  margin: auto
+  max-width: $page-width
+
+.post-body
+  margin-bottom: 60px
 
 footer
   clear: both
   font-size: $footer-size
   padding: 8px
   text-align: center
+
 footer, footer a
-  color: lighten($text-color, 30%)
-@media (prefers-color-scheme: dark)
-  footer, footer a
-    color: darken($text-color-dark, 30%)
+  color: var(--footer-colour)
+
+a.footnote:before
+  content: "["
+
+a.footnote:after
+  content: "]"
 
 .pagination
   font-size: $metadata-size
   float: center
   text-align: center
 
+.post-footer
+  width: 100%
+  text-align: center
+  margin-bottom: 2em
+
 .button
   padding: 6px 8px
   font-size: $footer-size
   line-height: 1.5
-  border: 1px solid $highlight-color
+  border: 1px solid var(--highlight-colour)
   border-radius: 3px
   background: transparent
-  color: $highlight-color
+  color: var(--highlight-colour)
   font-weight: lighter
+
+.pagination .button.current
+  background: var(--highlight-colour)
+  color: var(--text-colour)
 
 .controls
   text-align: center
   width: 100%
 
-@media (prefers-color-scheme: dark)
-  .button
-    border-color: $highlight-color-dark
-    color: $highlight-color-dark
-
 .grid
   display: flex
   flex-wrap: wrap
   padding-bottom: 3rem
-                
+
 .grid > .photo
   position: relative
   flex: 1 0 22rem
@@ -149,15 +186,17 @@ footer, footer a
   height: 100%
   object-fit: cover
 
+.photo:hover img
+  filter: blur(8px) grayscale(60%) brightness(60%)
+
 .photo:hover .photo-info, .photo:focus .photo-info
-    display: flex
-    justify-content: center
-    align-items: center
-    position: absolute
-    top: 0
-    width: 100%
-    height: 100%
-    background-color: rgba(0, 0, 0, 0.5)
+  display: flex
+  justify-content: center
+  align-items: center
+  position: absolute
+  top: 0
+  width: 100%
+  height: 100%
 
 .photo a:hover
   color: white
@@ -179,4 +218,3 @@ footer, footer a
 .description
   max-width: 90vh
   margin: auto
-
