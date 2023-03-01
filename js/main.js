@@ -33,4 +33,20 @@ addEventListener('load', () => {
     localStorage.setItem(PT, preference);
     reset.style.display = 'inline';
   };
+
+  let canvas = document.createElement('canvas');
+  let w = 48;
+  canvas.width = w;
+  canvas.height = w;
+  Array.from(document.querySelectorAll('.blurhash')).forEach(img => {
+    try {
+      const ctx = canvas.getContext("2d");
+      const imgdata = ctx.createImageData(w, w);
+      imgdata.data.set(decode(img.dataset.hash, w, w));
+      ctx.putImageData(imgdata, 0, 0);
+      let data = canvas.toDataURL();
+      img.src = data;
+    } catch(err) { console.error(err); }
+  });
 });
+

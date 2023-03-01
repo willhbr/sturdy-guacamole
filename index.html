@@ -7,12 +7,18 @@ layout: page
     <div class="photo">
       <a href="{{ post.url | absoluteurl }}">
         <div class="image">
-          <img src="{{ "/thumbnail/" | append: post.image | absoluteurl }}" loading="lazy">
+          {% if post.blurhash %}
+            <img src="{{ "/thumbnail/" | append: post.image | absoluteurl }}"
+              onload="document.getElementById('hash-{{ post.image }}').remove()" loading="lazy">
+            <img class="blurhash" data-hash="{{ post.blurhash }}" id="hash-{{ post.image }}">
+          {% else %}
+            <img src="{{ "/thumbnail/" | append: post.image | absoluteurl }}" loading="lazy">
+          {% endif %}
         </div>
         <div class="photo-info">
           <p class="date">{{ post.date | date: "%B %-d, %Y"}}<br></p>
           {% if post.location != null %}
-            <p class="location">&#x1F4CD; {{ post.location }}</p>
+          <p class="location">&#x1F4CD; {{ post.location }}</p>
           {% endif %}
           {% if post.metadata != null %}
             <p class="metadata">&#x1F4F7; {{ post.metadata }}</p>

@@ -1,6 +1,12 @@
 <div class="photo-container">
   <div class="image">
-    <img src="{{ "/photos/" | append: post.image | absoluteurl }}">
+    {% if post.blurhash %}
+      <img src="{{ "/photos/" | append: post.image | absoluteurl }}"
+        onload="document.getElementById('hash-{{ post.image }}').remove()">
+      <img class="blurhash" data-hash="{{ post.blurhash }}" id="hash-{{ post.image }}">
+    {% else %}
+      <img src="{{ "/photos/" | append: post.image | absoluteurl }}">
+    {% endif %}
   </div>
 </div>
 
