@@ -6,7 +6,3 @@ url: "https://pics.willhbr.net"
 
 plugins:
   - jekyll-feed
-  - jekyll-paginate
-
-paginate: 21
-paginate_path: "/page:num/"

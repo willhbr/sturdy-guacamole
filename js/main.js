@@ -50,3 +50,5 @@ addEventListener('load', () => {
   });
 });
 
+
+fetch("/index.json").then(d => d.json()).then(d => console.log(d));
