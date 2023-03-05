@@ -20,5 +20,16 @@ layout: page
 </div>
 
 <template id="post-template">
-  {% include index.html blurhash="ye" %}
+  <div class="photo">
+    <a>
+      <div class="image">
+        <img class="real" loading="lazy">
+        <img class="blurhash">
+      </div>
+      <div class="photo-info">
+        <p class="date"><br></p>
+        <p class="location"></p>
+      </div>
+    </a>
+  </div>
 </template>
