@@ -3,28 +3,12 @@ layout: page
 ---
 
 <div class="grid">
-  {% for post in site.posts limit: 6 %}
-    <div class="photo">
-      <a href="{{ post.url | absoluteurl }}">
-        <div class="image">
-          {% if post.blurhash %}
-            <img src="{{ "/thumbnail/" | append: post.image | absoluteurl }}"
-              onload="document.getElementById('hash-{{ post.image }}').remove()" loading="lazy">
-            <img class="blurhash" data-hash="{{ post.blurhash }}" id="hash-{{ post.image }}">
-          {% else %}
-            <img src="{{ "/thumbnail/" | append: post.image | absoluteurl }}" loading="lazy">
-          {% endif %}
-        </div>
-        <div class="photo-info">
-          <p class="date">{{ post.date | date: "%B %-d, %Y"}}<br></p>
-          {% if post.location != null %}
-          <p class="location">&#x1F4CD; {{ post.location }}</p>
-          {% endif %}
-          {% if post.metadata != null %}
-            <p class="metadata">&#x1F4F7; {{ post.metadata }}</p>
-          {% endif %}
-        </div>
-      </a>
-    </div>
-  {% endfor %}
 </div>
+
+<div class="loading-indicator">
+  Loading images...
+</div>
+
+<template id="post-template">
+  {% include index.html blurhash="ye" %}
+</template>

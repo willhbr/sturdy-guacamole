@@ -4,5 +4,9 @@ description: Will's photos
 baseurl: ""
 url: "https://pics.willhbr.net"
 
+image_date: "%F.jpeg"
+date_format: "%B %-d, %Y"
+link_date: "/%Y/%m/%d"
+
 plugins:
   - jekyll-feed
