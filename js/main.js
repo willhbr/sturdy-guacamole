@@ -42,17 +42,27 @@ const sa = (r, el, a, v) => r.querySelector(el).setAttribute(a, v);
 let grid, templ;
 const append_images = images => {
   images.forEach(f => {
-      let node = templ.content.cloneNode(true);
-      let date = new Date(f.d);
-      sa(node, 'a', 'href', "/" + date.getFullYear() + "/" + p(date.getMonth() + 1) + '/' + p(date.getDate()) + '/post.html');
-      sa(node, 'img', 'src', "/thumbnail/" + date.getFullYear() + "-" + p(date.getMonth() + 1) + '-' + p(date.getDate()) + '.jpeg');
-      let bh = node.querySelector('img.blurhash');
-      bh.dataset.hash = f.b;
-      let img = node.querySelector('img.real');
-      img.onload = bh.remove();
-      blurhash(bh);
-      grid.appendChild(node);
+    let node = templ.content.cloneNode(true);
+    let date = new Date(f.d);
+    sa(node, 'a', 'href', "/" + date.getFullYear() + "/" + p(date.getMonth() + 1) + '/' + p(date.getDate()) + '/post.html');
+    sa(node, 'img', 'src', "/thumbnail/" + date.getFullYear() + "-" + p(date.getMonth() + 1) + '-' + p(date.getDate()) + '.jpeg');
+    let bh = node.querySelector('img.blurhash');
+    bh.dataset.hash = f.b;
+    let img = node.querySelector('img.real');
+    img.onload = bh.remove();
+    blurhash(bh);
+    node.querySelector('.date').innerText = date.toLocaleString('default', {year: 'numeric', day: 'numeric', month: 'long'});
+    let l = node.querySelector('.location');
+    if (f.l) {
+      l.innerHTML = "&#x1F4CD; " + f.l;
+    } else {
+      l.remove();
+    }
+    grid.appendChild(node);
   });
+  if (images.length == 0) {
+    document.querySelector('.loading-indicator').innerText = "That's all."
+  }
 };
 let images;
 const scrolled = () => {
@@ -83,14 +93,24 @@ addEventListener('load', () => {
   Array.from(document.querySelectorAll('.blurhash')).forEach(blurhash);
   templ = document.getElementById('post-template');
   grid = document.querySelector('.grid')
-  fetch("/api/posts.json")
-    .catch(err => console.err(err))
-    .then(d => d.json())
-    .then(d => {
-      images = d;
-      append_images(images.splice(0, 9));
-      scrolled();
-    });
+  if (grid && templ) {
+    let year = new URLSearchParams(window.location.search).get('year');
+    fetch("/api/posts.json")
+      .catch(err => console.err(err))
+      .then(d => d.json())
+      .then(d => {
+        let idx = 0;
+        if (year) {
+          for (let i in d) {
+            if (new Date(d[i].d).getFullYear() <= year) {
+              idx = i;
+              break;
+            }
+          }
+        }
+        images = d.slice(idx);
+        append_images(images.splice(0, 9));
+        scrolled();
+      });
+  }
 });
-
-
