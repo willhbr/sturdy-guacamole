@@ -19,7 +19,6 @@ const newPreference = (oldpref) => {
   return mm && mm('(prefers-color-scheme: dark)').matches ? LM : DM;
 };
 
-const del = id => document.getElementById(id).remove();
 let canvas = null;
 const blurhash = (img, hash) => {
   canvas = canvas || document.createElement('canvas');
@@ -31,13 +30,11 @@ const blurhash = (img, hash) => {
     const imgdata = ctx.createImageData(w, w);
     imgdata.data.set(decode(hash, w, w));
     ctx.putImageData(imgdata, 0, 0);
-    let data = canvas.toDataURL();
-    img.src = data;
+    img.src = canvas.toDataURL();
   } catch(err) { console.error(err); }
 };
 
 const p = d => d < 10 ? '0' + d : d;
-const sa = (r, el, a, v) => r.querySelector(el).setAttribute(a, v);
 
 const set_metadata = (node, date, f) => {
   node.querySelector('.date').innerText = date.toLocaleString('default', {year: 'numeric', day: 'numeric', month: 'long'});
@@ -53,13 +50,12 @@ const show_overlay = info => {
   let date = new Date(info.d);
   overlay = overlay || document.getElementById('photo-overlay');
   let img = overlay.querySelector('img');
-  let src = "/photos/" + date.getFullYear() + "-" + p(date.getMonth() + 1) + '-' + p(date.getDate()) + '.jpeg';
-  img.setAttribute('src', src);
+  img.src = "/photos/" + date.getFullYear() + "-" + p(date.getMonth() + 1) + '-' + p(date.getDate()) + '.jpeg';
   set_metadata(overlay, date, info)
   overlay.style.display = '';
   overlay.querySelector('date')
   let cb = () => {
-    img.setAttribute('src', '');
+    img.src = '';
     overlay.style.display = 'none';
   };
   overlay.onclick = cb;
@@ -74,13 +70,13 @@ const append_images = images => {
       show_overlay(f);
     });
     let date = new Date(f.d);
-    sa(node, 'img', 'src', "/thumbnail/" + date.getFullYear() + "-" + p(date.getMonth() + 1) + '-' + p(date.getDate()) + '.jpeg');
     let bh = node.querySelector('img.blurhash');
     let img = node.querySelector('img.real');
-    img.onload = bh.remove();
+    img.src = "/thumbnail/" + date.getFullYear() + "-" + p(date.getMonth() + 1) + '-' + p(date.getDate()) + '.jpeg';
     blurhash(bh, f.b);
     set_metadata(node, date, f)
     grid.appendChild(node);
+    img.onload = bh.remove();
   });
   if (images.length == 0) {
     document.querySelector('.loading-indicator').innerText = "That's all."
