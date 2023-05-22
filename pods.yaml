@@ -1,0 +1,21 @@
+defaults:
+  build: website
+  run: website
+
+images:
+  website:
+    tag: sturdy-guacamole:latest
+    from: Containerfile.local
+containers:
+  website:
+    name: sturdy-guacamole
+    name: sturdy-guacamole
+    image: sturdy-guacamole:latest
+    bind-mounts:
+      .: /src
+    ports:
+      4300: 4000
+    interactive: true
+    autoremove: true
+    run-args:
+      userns: ""

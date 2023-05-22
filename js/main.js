@@ -53,7 +53,7 @@ const show_overlay = info => {
   img.src = "/photos/" + date.getFullYear() + "-" + p(date.getMonth() + 1) + '-' + p(date.getDate()) + '.jpeg';
   set_metadata(overlay, date, info)
   overlay.style.display = '';
-  overlay.querySelector('date')
+  overlay.querySelector('date');
   let cb = () => {
     img.src = '';
     overlay.style.display = 'none';

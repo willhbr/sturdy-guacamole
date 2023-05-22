@@ -26,8 +26,8 @@ $footer-colour-dark: darken($text-colour-dark, 10%)
 
 @import "darkmode"
 
-$paragraph-size: 16px
-$header-size: 2.2em
+$paragraph-size: 17px
+$header-size: 2.4em
 $metadata-size: 1.1rem
 $title-size: 2em
 $footer-size: 0.9rem
@@ -73,7 +73,7 @@ a
 
 a:hover
   color: var(--link-hover-colour)
-  text-decoration: none
+  text-decoration: underline
 
 hr
   border: none
@@ -84,6 +84,8 @@ hr
 
 h1.post-title
   font-size: $title-size
+  a:hover
+    text-decoration: none
 
 h1, h2, h3, h4, h5, h6
   color: var(--highlight-colour)
@@ -100,12 +102,17 @@ h1, h2, h3, h4, h5, h6
   color: var(--metadata-colour)
   font-size: $metadata-size
 
+.metadata a:hover
+  text-decoration: underline
+
 .title
   font-weight: 300
   font-size: $header-size
   color: var(--title-colour)
+.title:hover, .button:hover
+  text-decoration: none
 
-header
+header.site-header
   text-align: center
   margin-top: 25px
   margin-bottom: 50px
@@ -125,9 +132,6 @@ blockquote
   margin: auto
   max-width: $page-width
 
-.post-body
-  margin-bottom: 60px
-
 footer
   clear: both
   font-size: $footer-size
@@ -143,30 +147,36 @@ a.footnote:before
 a.footnote:after
   content: "]"
 
+.footnotes
+  margin-top: 4em
+  font-size: 0.9rem
+
 .pagination
   font-size: $metadata-size
   float: center
   text-align: center
-  .button
-    line-height: 2.5
   .button.current
     background: var(--highlight-colour)
-    color: var(--text-colour)
+    color: var(--background-colour)
 
 .post-footer
+  margin-top: 3em
+  margin-bottom: 4em
   width: 100%
   text-align: center
-  margin-bottom: 2em
 
 .button
   padding: 6px 8px
   font-size: $footer-size
   line-height: 1.5
-  border: 1px solid var(--highlight-colour)
   border-radius: 3px
   background: transparent
   color: var(--highlight-colour)
-  font-weight: lighter
+  font-weight: bold
+  text-transform: uppercase
+
+.container .button
+  line-height: 2.4
 
 .controls, .year-selector, .loading-indicator
   text-align: center
