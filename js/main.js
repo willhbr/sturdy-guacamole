@@ -76,7 +76,7 @@ const append_images = images => {
     blurhash(bh, f.b);
     set_metadata(node, date, f)
     grid.appendChild(node);
-    img.onload = bh.remove();
+    img.onload = () => bh.remove();
   });
   if (images.length == 0) {
     document.querySelector('.loading-indicator').innerText = "That's all."
@@ -117,14 +117,12 @@ addEventListener('load', () => {
       .then(d => d.json())
       .then(d => {
         let idx = 0;
-        if (year) {
-          for (let i in d) {
+        if (year)
+          for (let i in d)
             if (new Date(d[i].d).getFullYear() <= year) {
               idx = i;
               break;
             }
-          }
-        }
         images = d.slice(idx);
         append_images(images.splice(0, 9));
         scrolled();
