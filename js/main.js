@@ -1,22 +1,21 @@
-const LM = 'light-mode', DM = 'dark-mode';
+const LM = 'light', DM = 'dark', AU = 'auto';
 const setTheme = (preference) => {
   let classList = document.body.classList;
-  classList.remove(LM, DM);
+  classList.remove(LM + '-mode', DM + '-mode');
   if (preference == LM) {
-    classList.add(LM);
+    classList.add(LM + '-mode');
   } else if (preference == DM) {
-    classList.add(DM);
+    classList.add(DM + '-mode');
   }
 };
 
+const orderDark = [AU, LM, DM];
+const orderLight = [AU, DM, LM];
 const newPreference = (oldpref) => {
-  if (oldpref == DM) {
-    return LM;
-  } else if (oldpref == LM) {
-    return DM;
-  }
   let mm = window.matchMedia;
-  return mm && mm('(prefers-color-scheme: dark)').matches ? LM : DM;
+  let list = mm && mm('(prefers-color-scheme: dark)').matches ? orderDark : orderLight;
+  let idx = list.indexOf(oldpref) + 1;
+  return list[idx % 3];
 };
 
 let canvas = null;
@@ -94,16 +93,13 @@ const scrolled = () => {
 addEventListener('load', () => {
   const PT = 'theme-toggle';
   let toggle = document.getElementById(PT);
-  let reset = document.getElementById('theme-reset');
-  let preference = localStorage.getItem(PT);
-  if (!preference) {
-    reset.style.display = 'none';
-  }
+  let preference = localStorage.getItem(PT) || AU;
+  toggle.innerText = preference;
   toggle.onclick = () => {
-    preference = newPreference(localStorage.getItem(PT));
+    preference = newPreference(preference);
     setTheme(preference);
     localStorage.setItem(PT, preference);
-    reset.style.display = 'inline';
+    toggle.innerText = preference;
   };
 
   window.addEventListener('scroll', scrolled);

@@ -1,0 +1,78 @@
+.controls, .year-selector, .loading-indicator
+  text-align: center
+  width: 100%
+
+.grid
+  display: flex
+  flex-wrap: wrap
+  padding-bottom: 3rem
+
+.grid > .photo
+  position: relative
+  flex: 1 0 22rem
+  margin: 1rem
+  color: #fff
+  cursor: pointer
+  overflow: hidden
+
+.photo .image
+  display: grid
+  img
+    grid-row: 1
+    grid-column: 1
+    width: 100%
+
+.photo img
+  width: 100%
+  height: 100%
+  object-fit: cover
+img
+  border-radius: 4px
+
+.photo:hover img
+  filter: blur(8px) grayscale(60%) brightness(60%)
+
+.photo:hover .photo-info, .photo:focus .photo-info
+  display: flex
+  justify-content: center
+  align-items: center
+  position: absolute
+  top: 0
+  width: 100%
+  height: 100%
+
+.photo a:hover
+  color: white
+
+.grid .photo-info
+  display: none
+
+.description .photo-info
+  color: grey
+
+.photo-container
+  width: 100%
+  text-align: center
+
+.photo-container img
+  max-height: 90vh
+  max-width: 100%
+
+.description
+  max-width: 90vh
+  margin: auto
+  margin-bottom: 2em
+
+#photo-overlay
+  padding: 1em
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background: black
+  overflow: scroll
+  button
+    position: fixed
+    top: 0
+    left: 0
