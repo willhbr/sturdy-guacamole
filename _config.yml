@@ -10,3 +10,17 @@ link_date: "/%Y/%m/%d"
 
 plugins:
   - jekyll-feed
+
+exclude:
+  - .jj
+  - CNAME
+  - Containerfile.local
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - pods.yaml
+  - publish.rb
+
+sass:
+  style: compressed
+
