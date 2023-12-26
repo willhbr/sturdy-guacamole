@@ -2,7 +2,7 @@
 $highlight-colour-light: #6609a0
 $highlight-colour-dark: #D4B3FF
 // background colour for whole site
-$background-colour-light: #EEE
+$background-colour-light: #f5f5f5
 $background-colour-dark: #333
 // text colour for body text
 $text-colour-light: #333
@@ -45,6 +45,9 @@ $caption-size: 0.9rem
 $blockquote-border-width: 3px
 $body-side-margin: 8px
 
+html
+  border-top: 10px solid $highlight-colour-dark
+
 body
   color: var(--text-colour)
   background-color: var(--background-colour)
@@ -62,7 +65,7 @@ body
   border: none
   background: none
   color: var(--text-color)
-  padding: 5px
+  padding: 10px 5px
 
 strong
   font-weight: bold
