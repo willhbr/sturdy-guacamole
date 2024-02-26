@@ -14,11 +14,9 @@ $inline-text-pill-colour-dark: darken($background-colour-dark, 7%)
 $title-colour-light: black
 $title-colour-dark: white
 
-// colour for blockquote fg/bg
-$blockquote-colour-light: lighten($text-colour-light, 5%)
-$blockquote-colour-dark: darken($text-colour-dark, 5%)
-$blockquote-background-light: darken($background-colour-light, 5%)
-$blockquote-background-dark: lighten($background-colour-dark, 5%)
+// colour for blockquote bg
+$blockquote-colour-light: lighten($text-colour-light, 15%)
+$blockquote-colour-dark: darken($text-colour-dark, 15%)
 
 // colour for link a:hover
 $link-hover-colour-light: darken($highlight-colour-light, 10%)
@@ -33,16 +31,19 @@ $metadata-colour-dark: darken($text-colour-dark, 20%)
 $footer-colour-light: lighten($text-colour-light, 10%)
 $footer-colour-dark: darken($text-colour-dark, 10%)
 
+$title-font-family: "Bahnschrift", "DIN Alternate", "Roboto Condensed", sans-serif
+$body-font-family: "Helvetica", "Roboto", sans-serif
+$code-font-family: "Fira Code", "Anonymous Pro", monospace
+
 @import "darkmode"
 
 $paragraph-size: 17px
-$header-size: 2.4em
+$header-size: 2.5em
 $metadata-size: 1rem
-$title-size: 2em
+$title-size: 1.8em
 $footer-size: 0.9rem
 $caption-size: 0.9rem
 
-$blockquote-border-width: 3px
 $body-side-margin: 8px
 
 html
@@ -51,7 +52,7 @@ html
 body
   color: var(--text-colour)
   background-color: var(--background-colour)
-  font-family: "Helvetica", "Roboto", sans-serif
+  font-family: $body-font-family
   font-size: $paragraph-size
   font-weight: 300
   margin-left: $body-side-margin
@@ -59,7 +60,7 @@ body
 
 #theme-toggle
   clear: both
-  position: fixed
+  position: absolute
   right: 0
   top: 0
   border: none
@@ -81,10 +82,11 @@ a:hover
 
 hr
   border: none
-  height: 1px
-  color: var(--text-colour)
-  background-color: var(--text-colour)
-  width: 70%
+  height: 5px
+  border-radius: 3px
+  color: var(--inline-text-pill-colour)
+  background-color: var(--inline-text-pill-colour)
+  width: 30%
 
 h1.post-title
   font-size: $title-size
@@ -92,13 +94,10 @@ h1.post-title
     text-decoration: none
 
 h1, h2, h3, h4, h5, h6
-  font-family: "Bahnschrift", "DIN Alternate", sans-serif
+  font-family: $title-font-family
   color: var(--highlight-colour)
   font-weight: 300
   margin-bottom: 0
-// <article> shrinks this, make it a wee bigger
-h1
-  font-size: 1.8em
 
 .post-body img
   width: 100%
@@ -124,7 +123,7 @@ p
   font-size: $metadata-size
 
 .title
-  font-family: "Bahnschrift", "DIN Alternate", sans-serif
+  font-family: $title-font-family
   font-size: $header-size
   color: var(--title-colour)
 .title:hover, .button:hover
@@ -134,6 +133,8 @@ p
   padding: 2px 10px 5px 10px
   overflow: scroll
 
+pre, code
+  font-family: $code-font-family
 .highlighter-rouge pre, code.highlighter-rouge, .highlight
   border-radius: 4px
   font-size: 0.9em
@@ -150,10 +151,9 @@ header.site-header
 
 blockquote
   color: var(--blockquote-colour)
-  background: var(--blockquote-background)
-  border-left: $blockquote-border-width solid var(--highlight-colour)
-  padding: 10px ($body-side-margin - $blockquote-border-width) 1px
-  margin: 0 (-$body-side-margin) 1em
+  border-left: 3px solid var(--highlight-colour)
+  padding-left: .5em
+  margin-left: .5em
 
 p.caption
   color: var(--metadata-colour)
@@ -186,7 +186,7 @@ sup[role=doc-noteref]
     text-decoration: none
 
 .footnotes
-  margin-top: 4em
+  margin-top: 2em
   font-size: 0.9rem
 
 .pagination
